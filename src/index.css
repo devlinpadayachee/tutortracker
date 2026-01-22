@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-slate-200;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-slate-700 px-6 py-2.5 rounded-lg font-semibold border-2 border-slate-300 hover:bg-slate-50 transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all text-base;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Ensure touch targets are at least 44x44px */
+  button, a {
+    min-height: 44px;
+  }
+
+  /* Prevent text size adjustment on iOS */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
