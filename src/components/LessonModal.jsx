@@ -18,8 +18,8 @@ export default function LessonModal({ isOpen, onClose, lesson, studentId, studen
   useEffect(() => {
     if (lesson) {
       setFormData({
-        studentId: lesson.studentId,
-        date: new Date(lesson.date).toISOString().split('T')[0],
+        studentId: lesson.studentId || '',
+        date: lesson.date ? new Date(lesson.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
         duration: lesson.duration || 60,
         subject: lesson.subject || '',
         notes: lesson.notes || '',
@@ -102,7 +102,7 @@ export default function LessonModal({ isOpen, onClose, lesson, studentId, studen
                 <option value="">Select a student</option>
                 {students.map((student) => (
                   <option key={student.id} value={student.id}>
-                    {student.name}
+                    {student?.name || 'Unknown Student'}
                   </option>
                 ))}
               </select>

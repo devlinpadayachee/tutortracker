@@ -76,7 +76,7 @@ export default function Lessons() {
   }
 
   const filteredLessons = lessons.filter((lesson) =>
-    lesson.student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    lesson.student?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     lesson.subject?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -149,10 +149,10 @@ export default function Lessons() {
                         to={`/students/${lesson.studentId}`}
                         className="font-semibold text-sm sm:text-base text-slate-800 hover:text-blue-600 transition-colors break-words"
                       >
-                        {lesson.student.name}
+                        {lesson.student?.name || 'Unknown Student'}
                       </Link>
                       <span className="text-xs sm:text-sm text-slate-600 whitespace-nowrap">
-                        {format(new Date(lesson.date), 'MMM dd, yyyy')}
+                        {lesson.date ? format(new Date(lesson.date), 'MMM dd, yyyy') : 'No date'}
                       </span>
                       {lesson.subject && (
                         <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs sm:text-sm">

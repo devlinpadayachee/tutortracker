@@ -156,7 +156,18 @@ export const lessonsAPI = {
             };
           } catch (err) {
             console.error('Error fetching student:', err);
+            // Set default student object to prevent errors
+            lesson.student = {
+              id: lesson.studentId,
+              name: 'Unknown Student',
+            };
           }
+        } else {
+          // Set default student object if no studentId
+          lesson.student = {
+            id: null,
+            name: 'Unknown Student',
+          };
         }
         return lesson;
       })

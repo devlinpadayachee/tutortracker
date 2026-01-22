@@ -121,10 +121,10 @@ export default function Dashboard() {
                       to={`/students/${lesson.studentId}`}
                       className="font-semibold text-sm sm:text-base text-slate-800 hover:text-blue-600 break-words"
                     >
-                      {lesson.student.name}
+                      {lesson.student?.name || 'Unknown Student'}
                     </Link>
                     <span className="text-xs sm:text-sm text-slate-500 whitespace-nowrap">
-                      {new Date(lesson.date).toLocaleDateString()}
+                      {lesson.date ? new Date(lesson.date).toLocaleDateString() : 'No date'}
                     </span>
                     {lesson.reference && (
                       <span className="px-2 py-1 bg-blue-200 text-blue-800 rounded text-xs font-mono font-semibold">

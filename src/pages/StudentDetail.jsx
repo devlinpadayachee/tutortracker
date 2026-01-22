@@ -178,7 +178,7 @@ export default function StudentDetail() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                       <span className="font-semibold text-sm sm:text-base text-slate-800 whitespace-nowrap">
-                        {format(new Date(lesson.date), 'MMM dd, yyyy')}
+                        {lesson.date ? format(new Date(lesson.date), 'MMM dd, yyyy') : 'No date'}
                       </span>
                       {lesson.subject && (
                         <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs sm:text-sm">
