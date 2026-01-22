@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Plus, Search, Edit, Trash2, BookOpen } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Plus, Search, Edit, Trash2, BookOpen, Calendar } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import StudentModal from '../components/StudentModal'
 import { studentsAPI } from '../services/airtableService'
 
@@ -11,6 +11,7 @@ export default function Students() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingStudent, setEditingStudent] = useState(null)
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchStudents()
@@ -65,6 +66,10 @@ export default function Students() {
     setIsModalOpen(false)
     setEditingStudent(null)
     fetchStudents()
+  }
+
+  const handleAddLesson = (studentId) => {
+    navigate(`/lessons?studentId=${studentId}`)
   }
 
   const filteredStudents = students.filter((student) =>
@@ -145,12 +150,12 @@ export default function Students() {
                   <div className="flex-1">
                     <Link
                       to={`/students/${student.id}`}
-                      className="text-xl font-bold text-slate-800 hover:text-blue-600 transition-colors"
+                      className="text-xl font-bold text-slate-800 hover:text-blue-600 transition-colors block"
                     >
                       {student.name}
                     </Link>
                     {student.grade && (
-                      <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium mt-1">
+                      <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium mt-3">
                         {student.grade}
                       </span>
                     )}
@@ -179,7 +184,7 @@ export default function Students() {
                   </div>
                 </div>
 
-                <div className="border-t border-slate-200 pt-3 sm:pt-4 space-y-2">
+                <div className="border-t border-slate-200 pt-3 sm:pt-4 space-y-3">
                   <div className="flex items-center justify-between text-xs sm:text-sm">
                     <span className="text-slate-600">Total Lessons</span>
                     <span className="font-semibold text-slate-800">{totalLessons}</span>
@@ -190,6 +195,13 @@ export default function Students() {
                       R{outstandingBalance.toFixed(2)}
                     </span>
                   </div>
+                  <button
+                    onClick={() => handleAddLesson(student.id)}
+                    className="w-full btn-primary flex items-center justify-center space-x-2 min-h-[44px] mt-2"
+                  >
+                    <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span>Add Lesson</span>
+                  </button>
                 </div>
               </div>
             )

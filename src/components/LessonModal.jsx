@@ -28,6 +28,7 @@ export default function LessonModal({ isOpen, onClose, lesson, studentId, studen
         amountDue: lesson.amountDue?.toString() || '',
       })
     } else {
+      // Pre-select student when coming from student card, or reset form
       setFormData({
         studentId: studentId || '',
         date: new Date().toISOString().split('T')[0],
@@ -160,6 +161,21 @@ export default function LessonModal({ isOpen, onClose, lesson, studentId, studen
           </div>
 
           <div className="border-t border-slate-200 pt-4 space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Amount Due (R)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={formData.amountDue}
+                onChange={(e) => setFormData({ ...formData, amountDue: e.target.value })}
+                className="input-field"
+                placeholder="0.00"
+              />
+            </div>
+
             <div className="flex items-center space-x-3">
               <input
                 type="checkbox"
@@ -189,21 +205,6 @@ export default function LessonModal({ isOpen, onClose, lesson, studentId, studen
                 />
               </div>
             )}
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Amount Due (R)
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={formData.amountDue}
-                onChange={(e) => setFormData({ ...formData, amountDue: e.target.value })}
-                className="input-field"
-                placeholder="0.00"
-              />
-            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 pt-4">

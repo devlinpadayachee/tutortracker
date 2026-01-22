@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Plus, Search, Edit, Trash2, Calendar } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import LessonModal from '../components/LessonModal'
 import { format } from 'date-fns'
 import { lessonsAPI, studentsAPI } from '../services/airtableService'
@@ -12,11 +12,24 @@ export default function Lessons() {
   const [searchTerm, setSearchTerm] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingLesson, setEditingLesson] = useState(null)
+  const [selectedStudentId, setSelectedStudentId] = useState(null)
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     fetchLessons()
     fetchStudents()
   }, [])
+
+  // Check for studentId in URL and open modal
+  useEffect(() => {
+    const studentId = searchParams.get('studentId')
+    if (studentId && students.length > 0) {
+      setSelectedStudentId(studentId)
+      setIsModalOpen(true)
+      // Clean up URL
+      window.history.replaceState({}, '', '/lessons')
+    }
+  }, [searchParams, students])
 
   const fetchLessons = async () => {
     try {
@@ -58,6 +71,7 @@ export default function Lessons() {
   const handleModalClose = () => {
     setIsModalOpen(false)
     setEditingLesson(null)
+    setSelectedStudentId(null)
     fetchLessons()
   }
 
@@ -230,6 +244,7 @@ export default function Lessons() {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         lesson={editingLesson}
+        studentId={selectedStudentId}
         students={students}
       />
     </div>
